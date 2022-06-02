@@ -45,7 +45,7 @@ class JobApplicationViewSet(
     viewsets.GenericViewSet,
 ):
     serializer_class = serializers.base.JobApplicationModelSerializer
-    queryset = models.JobApplication.objects
+    queryset = models.JobApplication.objects.all()
     pagination_class = pagination.StandardResultsSetPagination
 
 
