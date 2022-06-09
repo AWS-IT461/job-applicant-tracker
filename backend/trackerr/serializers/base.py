@@ -9,7 +9,15 @@ class UserModelSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class CompanyDetailModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        models = models.CompanyDetail
+        fields = "__all__"
+
+
 class CompanyModelSerializer(serializers.ModelSerializer):
+    detail = CompanyDetailModelSerializer(many=True, read_only=True)
+
     class Meta:
         model = models.Company
         fields = "__all__"

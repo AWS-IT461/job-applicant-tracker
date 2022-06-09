@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
 from globals import DEFAULT_MAX_LENGTH, SMALL_MAX_LENGTH
-from backend.trackerr.choices import ApplicationStatusChoices, SexChoices
+from backend.trackerr.choices import ApplicationStatusChoices, CompanyDetailTypeChoices
 from backend.trackerr import managers
 
 
@@ -36,6 +36,22 @@ class Company(models.Model):
 
     def __str__(self):
         return f"{self.id} - {self.name}"
+
+
+class CompanyDetail(models.Model):
+    type = models.CharField(max_length=1, choices=CompanyDetailTypeChoices.choices)
+    value = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+
+    # Foreign Fields
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Company Detail"
+        verbose_name_plural = "Company Details"
+
+    def __str__(self):
+        return f"{self.id} - {self.user} - {self.company.name} - {self.value}"
 
 
 class JobApplication(models.Model):
