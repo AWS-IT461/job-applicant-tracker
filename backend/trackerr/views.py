@@ -22,6 +22,25 @@ class UserViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
         return Response(self.get_serializer(user).data)
 
+    def checkEmailExists(self, email):
+        return models.User.objects.filter(email=email).exists()
+
+    @action(methods=["POST"], detail=False)
+    def signup(self, request):
+        serializer = serializers.request.SignupRequestSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        if self.checkEmailExists(email := serializer.validated_data["email"]):
+            return Response("Email already taken", status=status.HTTP_409_CONFLICT)
+
+        password = serializer.validated_data["password"]
+
+        user = models.User.objects.create_user(email=email, password=password)
+
+        return Response(self.get_serializer(user).data)
+
 
 class EventViewSet(
     mixins.CreateModelMixin,

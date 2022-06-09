@@ -22,5 +22,10 @@ class LoginRequestSerializer(TokenObtainPairSerializer):
         else:
             raise serializers.ValidationError("Email or password is required")
 
-        attrs['user'] = user
+        attrs["user"] = user
         return attrs
+
+
+class SignupRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
