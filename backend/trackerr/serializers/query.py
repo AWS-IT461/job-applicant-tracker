@@ -8,6 +8,7 @@ class JobApplicationQuerySerializer(serializers.Serializer):
 
 class EventQuerySerializer(serializers.Serializer):
     user = serializers.CharField(required=False)
+    application = serializers.CharField(required=False)
 
 
 class CompanyQuerySerializer(serializers.Serializer):

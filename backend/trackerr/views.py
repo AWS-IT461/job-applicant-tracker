@@ -55,7 +55,7 @@ class EventViewSet(
     queryset = models.Event.objects
 
     def get_queryset(self):
-        serializer = serializers.query.JobApplicationQuerySerializer(
+        serializer = serializers.query.EventQuerySerializer(
             data=self.request.query_params
         )
 
@@ -66,6 +66,9 @@ class EventViewSet(
 
         if user := serializer.validated_data.get("user"):
             queryset = queryset.filter(user=user)
+
+        if application := serializer.validated_data.get("application"):
+            queryset = queryset.filter(job_application_id=application)
 
         return queryset.all()
 
