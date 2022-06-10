@@ -68,7 +68,7 @@ class Event(models.Model):
     title = models.CharField(max_length=DEFAULT_MAX_LENGTH)
     date = models.DateField()
     remarks = models.TextField(blank=True, null=True)
-    tags = models.CharField(max_length=DEFAULT_MAX_LENGTH, blank=True, null=True)
+    tags = models.CharField(max_length=400, blank=True, null=True)
 
     # Foreign Fields
     job_application = models.ForeignKey(JobApplication, on_delete=models.CASCADE)
