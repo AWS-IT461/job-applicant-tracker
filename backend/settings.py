@@ -27,8 +27,6 @@ LOCAL = os.path.isfile(env_file)
 if LOCAL:
     e.read_env(env_file)
 
-ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://*.railway.app"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -38,8 +36,6 @@ SECRET_KEY = "django-insecure-xt9gp%a)2$(f-r)e(%=ik*k#2np%whwv&$3%5-+&wik*j=g+y)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -163,3 +159,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://*.railway.app"]
