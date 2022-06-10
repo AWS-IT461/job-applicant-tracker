@@ -39,8 +39,7 @@ class UserViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
         password = serializer.validated_data["password"]
 
-        user = models.User.objects.create_user(email=email)
-        user.set_password(password)
+        user = models.User.objects.create_user(email=email, password=password)
 
         return Response(self.get_serializer(user).data)
 
