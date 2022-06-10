@@ -67,6 +67,8 @@ class EventViewSet(
         if user := serializer.validated_data.get("user"):
             queryset = queryset.filter(user=user)
 
+        return queryset.all()
+
 
 class JobApplicationViewSet(
     mixins.CreateModelMixin,
