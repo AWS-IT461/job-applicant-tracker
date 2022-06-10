@@ -27,6 +27,8 @@ LOCAL = os.path.isfile(env_file)
 if LOCAL:
     e.read_env(env_file)
 
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://*.railway.app"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
