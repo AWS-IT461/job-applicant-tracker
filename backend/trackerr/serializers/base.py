@@ -25,6 +25,9 @@ class CompanyModelSerializer(serializers.ModelSerializer):
 
 class JobApplicationModelSerializer(serializers.ModelSerializer):
     company = CompanyModelSerializer(read_only=True)
+    company_id = serializers.PrimaryKeyRelatedField(
+        source="company", queryset=models.Company.objects.all(), write_only=True
+    )
 
     class Meta:
         model = models.JobApplication
