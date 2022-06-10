@@ -56,7 +56,11 @@ class CompanyDetail(models.Model):
 
 class JobApplication(models.Model):
     applying_date = models.DateField()
-    status = models.CharField(max_length=1, choices=ApplicationStatusChoices.choices)
+    status = models.CharField(
+        max_length=1,
+        choices=ApplicationStatusChoices.choices,
+        default=ApplicationStatusChoices.PENDING,
+    )
 
     # Foreign Fields
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
