@@ -24,6 +24,8 @@ class CompanyModelSerializer(serializers.ModelSerializer):
 
 
 class JobApplicationModelSerializer(serializers.ModelSerializer):
+    company = CompanyModelSerializer(read_only=True)
+
     class Meta:
         model = models.JobApplication
         fields = "__all__"
