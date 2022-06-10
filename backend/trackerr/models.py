@@ -34,9 +34,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Company(models.Model):
     name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    address = models.CharField(max_length=LONG_MAX_LENGTH, default="", blank="")
+    address = models.CharField(max_length=LONG_MAX_LENGTH, default="", blank=True)
     contact_info = models.CharField(
-        max_length=CONTACT_INFO_MAX_LENGTH, default="", blank=""
+        max_length=CONTACT_INFO_MAX_LENGTH, default="", blank=True
     )
 
     class Meta:
