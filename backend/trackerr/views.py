@@ -33,7 +33,7 @@ class UserViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         if self.checkEmailExists(email := serializer.validated_data["email"]):
-            return Response("Email already taken", status=status.HTTP_409_CONFLICT)
+            return Response("Email already taken", status=status.HTTP_400_BAD_REQUEST)
 
         password = serializer.validated_data["password"]
 
@@ -54,6 +54,19 @@ class EventViewSet(
     serializer_class = serializers.base.EventModelSerializer
     queryset = models.Event.objects
 
+    def get_queryset(self):
+        serializer = serializers.query.JobApplicationQuerySerializer(
+            data=self.request.query_params
+        )
+
+        queryset = self.queryset
+
+        if not serializer.is_valid(raise_exception=True):
+            return queryset.all()
+
+        if user := serializer.validated_data.get("user"):
+            queryset = queryset.filter(user=user)
+
 
 class JobApplicationViewSet(
     mixins.CreateModelMixin,
@@ -67,6 +80,21 @@ class JobApplicationViewSet(
     queryset = models.JobApplication.objects.all()
     pagination_class = pagination.StandardResultsSetPagination
 
+    def get_queryset(self):
+        serializer = serializers.query.JobApplicationQuerySerializer(
+            data=self.request.query_params
+        )
+
+        queryset = self.queryset
+
+        if not serializer.is_valid(raise_exception=True):
+            return queryset.all()
+
+        if user := serializer.validated_data.get("user"):
+            queryset = queryset.filter(user=user)
+
+        return queryset.all()
+
 
 class CompanyViewSet(
     mixins.CreateModelMixin,
@@ -78,3 +106,18 @@ class CompanyViewSet(
 ):
     serializer_class = serializers.base.CompanyModelSerializer
     queryset = models.Company.objects
+
+    def get_queryset(self):
+        serializer = serializers.query.CompanyQuerySerializer(
+            data=self.request.query_params
+        )
+
+        queryset = self.queryset
+
+        if not serializer.is_valid(raise_exception=True):
+            return queryset.all()
+
+        if user := serializer.validated_data.get("user"):
+            queryset = queryset.filter(companydetail__user=user)
+
+        return queryset.all()
