@@ -41,6 +41,14 @@ class UserViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
         return Response(self.get_serializer(user).data)
 
+    @action(methods=["POST"], detail=False)
+    def profile(self, request, *args, **kwargs):
+        return Response(
+            serializers.base.UserModelSerializer(request.user).data
+            if request.user.is_authenticated
+            else None
+        )
+
 
 class EventViewSet(
     mixins.CreateModelMixin,
