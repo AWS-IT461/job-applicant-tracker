@@ -97,6 +97,22 @@ class JobApplicationViewSet(
 
         return queryset.all()
 
+    @action(methods=["GET"], detail=True)
+    def count(self, request, pk):
+        return Response(
+            {
+                "accepted": models.JobApplication.objects.filter(
+                    user=pk, status="A"
+                ).count(),
+                "pending": models.JobApplication.objects.filter(
+                    user=pk, status="P"
+                ).count(),
+                "rejected": models.JobApplication.objects.filter(
+                    user=pk, status="R"
+                ).count(),
+            }
+        )
+
 
 class CompanyViewSet(
     mixins.CreateModelMixin,
