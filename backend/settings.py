@@ -10,11 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
+import environ
+
 from pathlib import Path
 from datetime import timedelta
 
+e = environ.Env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+env_file = os.path.join(BASE_DIR, ".env")
+
+LOCAL = os.path.isfile(env_file)
+
+if LOCAL:
+    e.read_env(env_file)
 
 
 # Quick-start development settings - unsuitable for production
@@ -87,12 +98,18 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ.get("PGDATABASE", "tracker_db"),
+        "USER": os.environ.get("PGUSER", "tracker"),
+        "PASSWORD": os.environ.get("PGPASSWORD", "postgres"),
+        "HOST": os.environ.get("PGHOST", ""),
+        "PORT": os.environ.get("PGPORT", 5432),
     }
 }
+
 
 AUTH_USER_MODEL = "trackerr.User"
 
