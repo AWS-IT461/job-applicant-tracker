@@ -1,7 +1,12 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
-from globals import CONTACT_INFO_MAX_LENGTH, DEFAULT_MAX_LENGTH, SMALL_MAX_LENGTH
+from globals import (
+    CONTACT_INFO_MAX_LENGTH,
+    DEFAULT_MAX_LENGTH,
+    LONG_MAX_LENGTH,
+    SMALL_MAX_LENGTH,
+)
 from backend.trackerr.choices import ApplicationStatusChoices, CompanyDetailTypeChoices
 from backend.trackerr import managers
 
@@ -29,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Company(models.Model):
     name = models.CharField(max_length=DEFAULT_MAX_LENGTH)
-    address = models.CharField(max_length=DEFAULT_MAX_LENGTH)
+    address = models.CharField(max_length=LONG_MAX_LENGTH)
     contact_info = models.CharField(max_length=CONTACT_INFO_MAX_LENGTH)
 
     class Meta:
