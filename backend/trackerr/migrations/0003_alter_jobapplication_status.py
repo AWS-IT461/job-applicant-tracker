@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('trackerr', '0002_companydetail'),
+        ("trackerr", "0002_companydetail"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='jobapplication',
-            name='status',
-            field=models.CharField(choices=[('P', 'Pending'), ('A', 'Accepted'), ('R', 'Rejected')], default='P', max_length=1),
+            model_name="jobapplication",
+            name="status",
+            field=models.CharField(
+                choices=[("P", "Pending"), ("A", "Accepted"), ("R", "Rejected")],
+                default="P",
+                max_length=1,
+            ),
         ),
     ]

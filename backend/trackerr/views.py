@@ -2,6 +2,7 @@ from django.contrib.auth import login
 from rest_framework.response import Response
 from rest_framework import mixins, status, viewsets, serializers as serializer
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from backend.trackerr import serializers, models
 from backend.trackerr import pagination
 
@@ -10,6 +11,7 @@ class UserViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
     serializer_class = serializers.base.UserModelSerializer
     queryset = models.User.objects
+    permission_classes = [AllowAny]
 
     @action(methods=["POST"], detail=False)
     def login(self, request):
@@ -62,6 +64,7 @@ class EventViewSet(
 
     serializer_class = serializers.base.EventModelSerializer
     queryset = models.Event.objects
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         serializer = serializers.query.EventQuerySerializer(
@@ -93,6 +96,7 @@ class JobApplicationViewSet(
     serializer_class = serializers.base.JobApplicationModelSerializer
     queryset = models.JobApplication.objects.all()
     pagination_class = pagination.StandardResultsSetPagination
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         serializer = serializers.query.JobApplicationQuerySerializer(
@@ -136,6 +140,7 @@ class CompanyViewSet(
 ):
     serializer_class = serializers.base.CompanyModelSerializer
     queryset = models.Company.objects
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         serializer = serializers.query.CompanyQuerySerializer(
